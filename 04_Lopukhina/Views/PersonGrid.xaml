@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="_04_Lopukhina.Views.PersonGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:_04_Lopukhina.Views"
+             mc:Ignorable="d" 
+              d:DesignHeight="450" d:DesignWidth="700">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="5"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="5"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="5"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Criteria:" Grid.Column="1" VerticalAlignment="Center"/>
+        <ComboBox Grid.Column="3" ItemsSource="{Binding FilterByList}" SelectedIndex="{Binding SelectedFilterByIndex, Mode=TwoWay}" />
+
+        <Button Grid.Column="5" Content="Filter" Margin="1" Command="{Binding FilterCommand}"></Button>
+        <Button Grid.Column="7" Content="Sort" Margin="1" Command="{Binding Command}"></Button>
+
+        <DataGrid Name="PersonTable" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="7" 
+                  ItemsSource="{Binding PersonsList, Mode=OneWay}" AutoGenerateColumns="False"
+                  SelectedItem="{Binding SelectedPerson, Mode=TwoWay}" SelectionUnit="FullRow"
+                  SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                  SelectionMode="Single" CanUserSortColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="First Name" Binding="{Binding Person.FirstName, Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Last name" Binding="{Binding Person.LastName, Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="E-mail" Binding="{Binding Person.Email, Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Age" Binding="{Binding Person.Age, StringFormat=dd.MM.yyyy}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Adult" Binding="{Binding Person.IsAdult}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Birthday" Binding="{Binding Person.IsBirthday}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Sun Sign" Binding="{Binding Person.SunSign}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Chinese Sign" Binding="{Binding Person.ChineseSign}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Background="Bisque" Grid.Row="2" Grid.Column="1" Content="Add" Command="{Binding AddPersonCommand}"></Button>
+        <Button Background="Bisque" Grid.Row="2" Grid.Column="3" Content="Edit" Command="{Binding EditPersonCommand}"></Button>
+        <Button Background="Bisque" Grid.Row="2" Grid.Column="5" Content="Delete" Command="{Binding DeletePersonCommand}"></Button>
+        <Button Background="Bisque" Grid.Row="2" Grid.Column="7" Content="Back" Command="{Binding BackCommand}"></Button>
+
+    </Grid>
+</UserControl>
