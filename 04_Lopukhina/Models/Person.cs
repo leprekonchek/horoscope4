@@ -196,6 +196,7 @@ namespace _04_Lopukhina.Models
         #endregion
 
         #region OnPropertyChanged
+        [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
