@@ -14,43 +14,33 @@ namespace _04_Lopukhina.ViewModels
     class PersonEditorViewModel : INotifyPropertyChanged
     {
         #region Fields
-
-        private Person _person;
+        private Person _person = StationManager.CurrentPerson;
+        #endregion
 
         #region Commands
         private RelayCommand<object> _proceedCommand;
+        private RelayCommand<object> _backCommand;
         #endregion
-        #endregion
-
-        public PersonEditorViewModel()
-        {
-            _person = StationManager.CurrentPerson ?? new Person("", "", "");
-            StationManager.CurrentPerson = _person;
-        }
 
         #region Properties
-
-        public Person Person
-        {
-            get => _person;
-        }
-
+        public Person Person =>_person;
         #endregion
 
         #region Commands
 
         public RelayCommand<object> ProceedCommand =>
-            _proceedCommand ?? (_proceedCommand = new RelayCommand<object>(ProceedImplementation, CanExecute));
+            _proceedCommand ?? (_proceedCommand = new RelayCommand<object>(o => ProceedImplementation(), CanExecute));
+
+        public RelayCommand<object> BackCommand =>
+            _backCommand ?? (_backCommand = new RelayCommand<object>(o => BackImplementation(), CanExecute));
 
         #endregion
 
-        private async void ProceedImplementation(object obj)
+        private async void ProceedImplementation()
         {
             LoaderManager.Instance.ShowLoader();
             bool isFinished = await Task.Run(() =>
             {
-                StationManager.CurrentPerson = _person;
-
                 try
                 {
                     Person.EmailValidation(Person.Email);
@@ -84,18 +74,25 @@ namespace _04_Lopukhina.ViewModels
                 return true;
             });
             LoaderManager.Instance.HideLoader();
+
             if (isFinished)
             {
                 StationManager.DataStorage.AddPerson(_person);
+                StationManager.DataStorage.SaveChanges();
+                // StationManager.PersonGrid.Update();
                 NavigationManager.Instance.Navigate(ViewType.PersonGrid);
             }
-
         }
 
-       private bool CanExecute(object obj)
+        private void BackImplementation()
         {
-            return !String.IsNullOrEmpty(Person.FirstName) && !String.IsNullOrEmpty(Person.LastName) && !String.IsNullOrEmpty(Person.Email);
+            NavigationManager.Instance.Navigate(ViewType.PersonGrid);
         }
+
+        private bool CanExecute(object obj) =>
+            !String.IsNullOrEmpty(Person.FirstName) &&
+            !String.IsNullOrEmpty(Person.LastName) &&
+            !String.IsNullOrEmpty(Person.Email);
 
         #region INotifyPropertyChanged
 

@@ -11,10 +11,7 @@ namespace _04_Lopukhina.Tools
         #endregion
 
         #region Constructors
-        public RelayCommand(Action<T> execute)
-            : this(execute, null)
-        {
-        }
+        public RelayCommand(Action<T> execute) : this(execute, null) { }
 
         public RelayCommand(Action<T> execute, Predicate<T> canExecute)
         {

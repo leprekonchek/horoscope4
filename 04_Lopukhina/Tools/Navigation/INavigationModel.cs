@@ -3,7 +3,8 @@
     internal enum ViewType
     {
         PersonGrid,
-        PersonEditor
+        PersonEditor,
+        PersonAdder
     }
 
     interface INavigationModel

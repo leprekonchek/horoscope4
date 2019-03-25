@@ -58,6 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Annotations\Annotations.cs" />
     <Compile Include="Tools\DataStorage\IDataStorage.cs" />
     <Compile Include="Tools\DataStorage\SerializedDataStorage.cs" />
     <Compile Include="Tools\Exceptions\MyExceptions.cs" />
@@ -73,9 +74,13 @@
     <Compile Include="Tools\Navigation\InitNavigationModel.cs" />
     <Compile Include="Tools\Navigation\NavigationModel.cs" />
     <Compile Include="Tools\RelayCommand.cs" />
+    <Compile Include="ViewModels\PersonAdderViewModel.cs" />
     <Compile Include="ViewModels\PersonGridViewModel.cs" />
     <Compile Include="ViewModels\PersonEditorViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Views\PersonAdder.xaml.cs">
+      <DependentUpon>PersonAdder.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PersonEditor.xaml.cs">
       <DependentUpon>PersonEditor.xaml</DependentUpon>
     </Compile>
@@ -94,6 +99,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\PersonAdder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PersonEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -5,11 +5,8 @@ namespace _04_Lopukhina.Tools.Navigation
 {
     internal class InitNavigationModel : NavigationModel
     {
-        public InitNavigationModel(IContentOwner contentOwner) : base(contentOwner)
-        {
-
-        }
-
+        public InitNavigationModel(IContentOwner contentOwner) : base(contentOwner) { }
+        
         protected override void InitializeView(ViewType viewType)
         {
             switch (viewType)
@@ -19,6 +16,9 @@ namespace _04_Lopukhina.Tools.Navigation
                     break;
                 case ViewType.PersonGrid:
                     ViewsDictionary.Add(viewType, new PersonGridTable());
+                    break;
+                case ViewType.PersonAdder:
+                    ViewsDictionary.Add(viewType, new PersonAdder());
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(viewType), viewType, null);

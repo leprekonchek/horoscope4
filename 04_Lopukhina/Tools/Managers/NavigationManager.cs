@@ -22,10 +22,7 @@ namespace _04_Lopukhina.Tools.Managers
 
         private INavigationModel _navigationModel;
 
-        private NavigationManager()
-        {
-
-        }
+        private NavigationManager() { }
 
         internal void Initialize(INavigationModel navigationModel)
         {

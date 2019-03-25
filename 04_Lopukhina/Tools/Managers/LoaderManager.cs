@@ -22,10 +22,7 @@ namespace _04_Lopukhina.Tools.Managers
 
         private ILoaderOwner _loaderOwner;
 
-        private LoaderManager()
-        {
-
-        }
+        private LoaderManager() { }
 
         internal void Initialize(ILoaderOwner loaderOwner)
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using _04_Lopukhina.Models;
 using _04_Lopukhina.Tools.DataStorage;
 
@@ -9,17 +10,13 @@ namespace _04_Lopukhina.Tools.Managers
     {
         public static event Action StopThreads;
         internal static Person CurrentPerson { get; set; }
+        internal static DataGrid PersonGrid { get; set; }
 
-        private static IDataStorage _dataStorage;
-
-        internal static IDataStorage DataStorage
-        {
-            get { return _dataStorage; }
-        }
+        internal static IDataStorage DataStorage { get; private set; }
 
         internal static void Initialize(IDataStorage dataStorage)
         {
-            _dataStorage = dataStorage;
+            DataStorage = dataStorage;
         }
 
         internal static void CloseApp()

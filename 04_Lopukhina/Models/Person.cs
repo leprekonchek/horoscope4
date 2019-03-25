@@ -14,7 +14,8 @@ namespace _04_Lopukhina.Models
         private string _lastName;
         private string _email;
         private DateTime _birthday;
-        private string _zodiacSign = "you don't have your sign, you're unique";
+        private string _zodiacSign;
+        private string _chineseSign;
         private string[] _chinaSigns = { "Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig" };
         public string HbCongratulations =
             "This Birthday wish is just for you, \n And I hope it comes true: \n B e yourself, love and appreciate yourself \n I magine and achieve all you can \n R elax and take it easy \n T ake time and do whatever you want, your \n H umor, never lose it and \n D o not give up, continue going \n A nd remember, you are loved by others \n Y esterday is gone, tomorrow is not here, live today and enjoy the year.";
@@ -75,76 +76,74 @@ namespace _04_Lopukhina.Models
 
         public bool IsBirthday => _birthday.Day == DateTime.Today.Day && _birthday.Month == DateTime.Today.Month;
 
-        public string SunSign
+        public string SunSign => _zodiacSign ?? (_zodiacSign = CalculateSunSign());
+
+        public string ChineseSign => _chineseSign ?? (_chineseSign = CalculateChineseSign());
+        
+        private string CalculateSunSign()
         {
-            get
+            int month = _birthday.Month;
+            int day = _birthday.Day;
+
+            switch (month)
             {
-                int month = _birthday.Month;
-                int day = _birthday.Day;
-
-                switch (month)
-                {
-                    case 01 when day >= 20:
-                    case 02 when day <= 18:
-                        _zodiacSign = "Aquarius";
-                        break;
-                    case 02 when day >= 19:
-                    case 03 when day <= 20:
-                        _zodiacSign = "Pisces";
-                        break;
-                    case 03 when day >= 21:
-                    case 04 when day <= 19:
-                        _zodiacSign = "Aries";
-                        break;
-                    case 04 when day >= 20:
-                    case 05 when day <= 20:
-                        _zodiacSign = "Taurus";
-                        break;
-                    case 05 when day >= 21:
-                    case 06 when day <= 20:
-                        _zodiacSign = "Gemini";
-                        break;
-                    case 06 when day >= 21:
-                    case 07 when day <= 22:
-                        _zodiacSign = "Cancer";
-                        break;
-                    case 07 when day >= 23:
-                    case 08 when day <= 22:
-                        _zodiacSign = "Leo";
-                        break;
-                    case 08 when day >= 23:
-                    case 09 when day <= 22:
-                        _zodiacSign = "Virgo";
-                        break;
-                    case 09 when day >= 23:
-                    case 10 when day <= 22:
-                        _zodiacSign = "Libra";
-                        break;
-                    case 10 when day >= 23:
-                    case 11 when day <= 21:
-                        _zodiacSign = "Scorpio";
-                        break;
-                    case 11 when day >= 22:
-                    case 12 when day <= 21:
-                        _zodiacSign = "Sagittarius";
-                        break;
-                    case 12 when day >= 22:
-                    case 01 when day <= 19:
-                        _zodiacSign = "Capricorn";
-                        break;
-                }
-
-                return _zodiacSign;
+                case 01 when day >= 20:
+                case 02 when day <= 18:
+                    _zodiacSign = "Aquarius";
+                    break;
+                case 02 when day >= 19:
+                case 03 when day <= 20:
+                    _zodiacSign = "Pisces";
+                    break;
+                case 03 when day >= 21:
+                case 04 when day <= 19:
+                    _zodiacSign = "Aries";
+                    break;
+                case 04 when day >= 20:
+                case 05 when day <= 20:
+                    _zodiacSign = "Taurus";
+                    break;
+                case 05 when day >= 21:
+                case 06 when day <= 20:
+                    _zodiacSign = "Gemini";
+                    break;
+                case 06 when day >= 21:
+                case 07 when day <= 22:
+                    _zodiacSign = "Cancer";
+                    break;
+                case 07 when day >= 23:
+                case 08 when day <= 22:
+                    _zodiacSign = "Leo";
+                    break;
+                case 08 when day >= 23:
+                case 09 when day <= 22:
+                    _zodiacSign = "Virgo";
+                    break;
+                case 09 when day >= 23:
+                case 10 when day <= 22:
+                    _zodiacSign = "Libra";
+                    break;
+                case 10 when day >= 23:
+                case 11 when day <= 21:
+                    _zodiacSign = "Scorpio";
+                    break;
+                case 11 when day >= 22:
+                case 12 when day <= 21:
+                    _zodiacSign = "Sagittarius";
+                    break;
+                case 12 when day >= 22:
+                case 01 when day <= 19:
+                    _zodiacSign = "Capricorn";
+                    break;
             }
+
+            return _zodiacSign;
         }
 
-        public string ChineseSign
+        private string CalculateChineseSign()
         {
-            get
-            {
-                int index = Math.Abs(_birthday.Year - 1900) % 12;
-                return _chinaSigns[index];
-            }
+            int index = Math.Abs(_birthday.Year - 1900) % 12;
+            return _chinaSigns[index];
         }
 
         public void IsAgeCorrect(int age)
@@ -196,14 +195,14 @@ namespace _04_Lopukhina.Models
 
         #endregion
 
-        //[field: NonSerialized]
+        #region OnPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
-       
+
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
+        #endregion
     }
 
 }

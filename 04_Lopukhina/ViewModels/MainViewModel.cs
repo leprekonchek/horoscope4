@@ -39,11 +39,15 @@ namespace _04_Lopukhina.ViewModels
             LoaderManager.Instance.Initialize(this);
         }
 
+        #region OnPropertyChanged
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        #endregion
     }
 }
