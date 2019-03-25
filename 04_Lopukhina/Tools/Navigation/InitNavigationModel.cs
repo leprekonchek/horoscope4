@@ -18,7 +18,7 @@ namespace _04_Lopukhina.Tools.Navigation
                     ViewsDictionary.Add(viewType, new PersonEditor());
                     break;
                 case ViewType.PersonGrid:
-                    ViewsDictionary.Add(viewType, new PersonGrid());
+                    ViewsDictionary.Add(viewType, new PersonGridTable());
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(viewType), viewType, null);

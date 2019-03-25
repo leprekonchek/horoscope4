@@ -21,7 +21,6 @@ namespace _04_Lopukhina.Tools.DataStorage
             {
                 _persons = new List<Person>();
                 FillPersons();
-                SaveChanges();
             }
         }
 
@@ -58,7 +57,7 @@ namespace _04_Lopukhina.Tools.DataStorage
             
             for (int i = 0; i < 50; i++)
             {
-                DateTime birthday = new DateTime(ran.Next(1999, 2000), ran.Next(1, 12), ran.Next(1, 28));
+                DateTime birthday = new DateTime(ran.Next(1990, 2005), ran.Next(1, 12), ran.Next(1, 28));
                 AddPerson(new Person(first_names[i], last_names[i], emails[i] + "@ukma.edu.ua", birthday));
             }
         }

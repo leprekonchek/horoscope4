@@ -79,8 +79,8 @@
     <Compile Include="Views\PersonEditor.xaml.cs">
       <DependentUpon>PersonEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PersonGrid.xaml.cs">
-      <DependentUpon>PersonGrid.xaml</DependentUpon>
+    <Compile Include="Views\PersonGridTable.xaml.cs">
+      <DependentUpon>PersonGridTable.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -98,7 +98,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\PersonGrid.xaml">
+    <Page Include="Views\PersonGridTable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

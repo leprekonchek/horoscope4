@@ -53,8 +53,8 @@ namespace _04_Lopukhina.ViewModels
             _deletePersonCommand ?? (_deletePersonCommand = new RelayCommand<object>(
                 DeletePersonImplementation, CanExecute));
 
-        public RelayCommand<Object> FilterCommand =>
-            _filterCommand ?? (_filterCommand = new RelayCommand<object>());
+        //public RelayCommand<Object> FilterCommand =>
+        //    _filterCommand ?? (_filterCommand = new RelayCommand<object>());
 
         public RelayCommand<Object> SortCommand
         {

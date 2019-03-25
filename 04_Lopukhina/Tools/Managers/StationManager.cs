@@ -5,7 +5,7 @@ using _04_Lopukhina.Tools.DataStorage;
 
 namespace _04_Lopukhina.Tools.Managers
 {
-    class StationManager
+    internal static class StationManager
     {
         public static event Action StopThreads;
         internal static Person CurrentPerson { get; set; }
