@@ -11,24 +11,18 @@ using _04_Lopukhina.Tools.Navigation;
 
 namespace _04_Lopukhina.ViewModels
 {
-    class PersonEditorViewModel : INotifyPropertyChanged
+    class PersonAdderViewModel : INotifyPropertyChanged
     {
         #region Fields
         private Person _person = StationManager.CurrentPerson;
-        private Person _tempPerson = StationManager.TempPerson;
         #endregion
 
         #region Commands
         private RelayCommand<object> _proceedCommand;
-        private RelayCommand<object> _backCommand;
         #endregion
 
-        #region Properties
+       #region Properties
 
-        public PersonEditorViewModel()
-        {
-            StationManager.editorVM = this;
-        }
         public Person Person
         {
             get => _person;
@@ -39,35 +33,23 @@ namespace _04_Lopukhina.ViewModels
             }
         }
 
-        public Person TempPerson
-        {
-            get => _tempPerson;
-            set
-            {
-                _tempPerson = value;
-                OnPropertyChanged();
-            }
-        }
         #endregion
 
         #region Commands
 
         public RelayCommand<object> ProceedCommand =>
-            _proceedCommand ?? (_proceedCommand = new RelayCommand<object>(o => ProceedImplementation(), CanExecute));
-
-        public RelayCommand<object> BackCommand =>
-            _backCommand ?? (_backCommand = new RelayCommand<object>(o => BackImplementation(), CanExecute));
+            _proceedCommand ?? (_proceedCommand = new RelayCommand<object>(ProceedImplementation, CanExecute));
 
         #endregion
 
-        private async void ProceedImplementation()
+        private async void ProceedImplementation(object obj)
         {
             LoaderManager.Instance.ShowLoader();
             bool isFinished = await Task.Run(() =>
             {
                 try
                 {
-                    TempPerson.EmailValidation(Person.Email);
+                    Person.EmailValidation(Person.Email);
                 }
                 catch (NotValidEmailException e)
                 {
@@ -77,7 +59,7 @@ namespace _04_Lopukhina.ViewModels
 
                 try
                 {
-                    TempPerson.IsAgeCorrect(Person.Age);
+                    Person.IsAgeCorrect(Person.Age);
                 }
                 catch (NotBornException e)
                 {
@@ -97,36 +79,23 @@ namespace _04_Lopukhina.ViewModels
 
                 return true;
             });
-            LoaderManager.Instance.HideLoader();
 
+            LoaderManager.Instance.HideLoader();
             if (isFinished)
             {
-                Person = TempPerson;
-                StationManager.TempPerson = null;
                 StationManager.DataStorage.AddPerson(_person);
-                StationManager.DataStorage.SaveChanges();
+                _person = new Person("", "", "");
+                Person = _person;
                 StationManager.gridVM.Update();
                 NavigationManager.Instance.Navigate(ViewType.PersonGrid);
-                UpdatePersons();
             }
-        }
 
-        private void BackImplementation()
-        {
-            NavigationManager.Instance.Navigate(ViewType.PersonGrid);
         }
 
         private bool CanExecute(object obj) =>
             !String.IsNullOrEmpty(Person.FirstName) &&
             !String.IsNullOrEmpty(Person.LastName) &&
             !String.IsNullOrEmpty(Person.Email);
-
-        public void UpdatePersons()
-        {
-            TempPerson = StationManager.TempPerson;
-            _person = StationManager.CurrentPerson;
-            OnPropertyChanged("TempPerson");
-        }
 
         #region INotifyPropertyChanged
 

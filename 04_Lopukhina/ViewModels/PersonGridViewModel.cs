@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using _04_Lopukhina.Annotations;
 using _04_Lopukhina.Models;
 using _04_Lopukhina.Tools;
@@ -31,6 +32,11 @@ namespace _04_Lopukhina.ViewModels
         #endregion
 
         #region Properties
+
+        public PersonGridViewModel()
+        {
+            StationManager.gridVM = this;
+        }
 
         public string FilterWord { get; set; }
 
@@ -126,13 +132,20 @@ namespace _04_Lopukhina.ViewModels
         private void EditPersonImplementation()
         {
             StationManager.CurrentPerson = SelectedPerson;
+            StationManager.TempPerson = new Person(StationManager.CurrentPerson.FirstName, StationManager.CurrentPerson.LastName, StationManager.CurrentPerson.Email, StationManager.CurrentPerson.Birthday);
+            StationManager.editorVM.UpdatePersons();
             NavigationManager.Instance.Navigate(ViewType.PersonEditor);
         }
 
-        private void DeletePersonImplementation()
+        private async void DeletePersonImplementation()
         {
-            StationManager.DataStorage.DeletePerson(SelectedPerson);
-            Update();
+            LoaderManager.Instance.ShowLoader();
+            await Task.Run(() =>
+            {
+                StationManager.DataStorage.DeletePerson(SelectedPerson);
+                OnPropertyChanged(nameof(MyPersonsList));
+            });
+            LoaderManager.Instance.HideLoader();
         }
 
         private void SaveImplementation()
@@ -144,7 +157,7 @@ namespace _04_Lopukhina.ViewModels
 
         public bool CanExecute(object obj) => SelectedPerson != null;
 
-        public void Update() { OnPropertyChanged("MyPersonsList"); }
+        public void Update() { OnPropertyChanged(nameof(MyPersonsList)); }
 
         #region OnPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
